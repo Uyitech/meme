@@ -17,11 +17,11 @@ body {
 }
 
 .header {
+    height: 65px;
+    padding: 20px;
+    color: #fff;
     display: flex;
     align-items: center;
-    height: 65px;
-    color: white;
-    padding: 20px;
     background: linear-gradient(90deg, #672280 1.18%, #A626D3 100%);
 }
 
@@ -36,24 +36,21 @@ body {
 }
 
 .header--project {
-    font-size: 0.75rem;
     font-weight: 500;
+    font-size: 0.75rem;
 }
 
 section {
     padding: 36px;
 }
 
-.row {
+.row,
+.form-group {
     padding-bottom: 10px;
 }
 
 .form {
     margin-bottom: 10px;
-}
-
-.form-group {
-    padding-bottom: 8px;
 }
 
 .form--button {
@@ -66,7 +63,44 @@ section {
     background: linear-gradient(90.41deg, #711F8D 1.14%, #A818DA 100%);
 }
 
+.meme {
+    position: relative;
+}
+
 .meme--image {
     width: 100%;
     border-radius: 4px;
+}
+
+.meme--text {
+    position: absolute;
+    width: 80%;
+    text-align: center;
+    left: 50%;
+    transform: translateX(-50%);
+    margin: 15px 0;
+    padding: 0 5px;
+    font-family: impact, sans-serif;
+    font-size: 2em;
+    text-transform: uppercase;
+    color: white;
+    letter-spacing: 1px;
+    text-shadow:
+        2px 2px 0 #000,
+        -2px -2px 0 #000,
+        2px -2px 0 #000,
+        -2px 2px 0 #000,
+        0 2px 0 #000,
+        2px 0 0 #000,
+        0 -2px 0 #000,
+        -2px 0 0 #000,
+        2px 2px 5px #000;
+}
+
+.bottom {
+    bottom: 0;
+}
+
+.top {
+    top: 0;
 }

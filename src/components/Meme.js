@@ -1,67 +1,96 @@
 import React from "react"
-import memesData from "../memesData"
-
 
 function Meme() {
-
     const [meme, setMeme] = React.useState({
         topText: "",
         bottomText: "",
         randomImage: "http://i.imgflip.com/1bij.jpg"
     })
 
-    const [allMemeImages, setAllMemeImages] = React.useState(memesData)
+    const [allMemes, setAllMemes] = React.useState([])
+
+    React.useEffect(() => {
+        async function getMemes() {
+            const res = await fetch("https://api.imgflip.com/get_memes")
+            const data = await res.json()
+            setAllMemes(data.data.memes)
+        }
+        getMemes()
+    }, [])
 
     function getMemeImage() {
-        const memesArray = allMemeImages.data.memes
-        const randomNumber = Math.floor(Math.random() * memesArray.length)
-        const url = (memesArray[randomNumber].url)
+        const randomNumber = Math.floor(Math.random() * allMemes.length)
+        const url = (allMemes[randomNumber].url)
         setMeme(prevMeme => ({
             ...prevMeme,
             randomImage: url
         }))
     }
 
+    function handleChange(event) {
+        const { name, value } = event.target
+        setMeme(prevMeme => ({
+            ...prevMeme,
+            [name]: value
+        }))
+    }
+
     return (
         <section>
             <div className="form">
-                <div class="row">
-
+                <div className="row">
                     <div className="form-group col-md-6">
-                        <div class="form-outline">
-                            <input type="text" id="formControlLg" class="form-control" />
-                            <label class="form-label" for="formControlLg" >Top Text</label>
-                            <div class="form-notch">
-                                <div class="form-notch-leading" ></div>
-                                <div class="form-notch-middle" ></div>
-                                <div class="form-notch-trailing"></div>
+                        <div className="form-outline">
+                            <input
+                                type="text"
+                                id="formControlLg"
+                                className="form-control"
+                                name="topText"
+                                value={meme.topText}
+                                onChange={handleChange}
+                            />
+                            <label className="form-label" htmlFor="formControlLg" >Top Text</label>
+                            <div className="form-notch">
+                                <div className="form-notch-leading" ></div>
+                                <div className="form-notch-middle" ></div>
+                                <div className="form-notch-trailing"></div>
                             </div>
                         </div>
                     </div>
-
                     <div className="form-group col-md-6">
-                        <div class="form-outline">
-                            <input type="text" id="form2" className="form-control" />
-                            <label class="form-label" for="form2">Bottom Text</label>
-                            <div class="form-notch">
-                                <div class="form-notch-leading" ></div>
-                                <div class="form-notch-middle" ></div>
-                                <div class="form-notch-trailing"></div>
+                        <div className="form-outline">
+                            <input
+                                type="text"
+                                id="form2"
+                                className="form-control"
+                                name="bottomText"
+                                value={meme.bottomText}
+                                onChange={handleChange}
+                            />
+                            <label className="form-label" htmlFor="form2">Bottom Text</label>
+                            <div className="form-notch">
+                                <div className="form-notch-leading" ></div>
+                                <div className="form-notch-middle" ></div>
+                                <div className="form-notch-trailing"></div>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <div class="form-group">
+                <div className="form-group">
                     <button className="form--button" onClick={getMemeImage}>
                         Get a new meme image 🖼
                     </button>
                 </div>
             </div>
 
-            <img src={meme.randomImage} alt="" className="meme--image" />
+            <div className="meme">
+                <img src={meme.randomImage} className="meme--image" alt="" />
+                <h2 className="meme--text top">{meme.topText}</h2>
+                <h2 className="meme--text bottom">{meme.bottomText}</h2>
+            </div>
         </section>
     )
 }
 
-export default Meme
+export default Meme;
